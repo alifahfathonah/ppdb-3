@@ -32,7 +32,7 @@
 | User |                     Feature                |
 | :------------: | :---------------------------------------------: |
 |       ✅        |   Edit Profile                    |
-|       ✅        |   Download Report Formulir (PDF)         |
+|       ✅        |   Download Formulir Report (PDF)         |
 
 
 
