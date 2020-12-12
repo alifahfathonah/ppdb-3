@@ -27,4 +27,10 @@ function password($pwb,$nisn){
     return $update;
 }
 
+function select($query){
+    global $con;
+    $query = mysqli_query($con,$query);
+    $array = mysqli_fetch_assoc($query);
+    return $array;
+}
 ?>

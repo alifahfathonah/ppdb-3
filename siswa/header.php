@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +46,7 @@
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
            <li class="nav-item">
-            <a href="../ppdb" <?php if ($page == 'Edit Profile') { echo "class='nav-link active'"; }else{ echo "class='nav-link'"; } ?>>
+            <a href="../siswa" <?php if ($page == 'Edit Profile') { echo "class='nav-link active'"; }else{ echo "class='nav-link'"; } ?>>
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Edit Profile
@@ -54,10 +54,18 @@
             </a>
           </li>
            <li class="nav-item">
-            <a href="ubah_pw.php" <?php if ($page == 'Edit Akun') { echo "class='nav-link active'"; }else{ echo "class='nav-link'"; } ?>>
+            <a href="ubah_pw.php" <?php if ($page == 'pw') { echo "class='nav-link active'"; }else{ echo "class='nav-link'"; } ?>>
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Ubah Password
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="form.php?nisn=<?= $_SESSION['username'] ?>" <?php if ($page == 'Formulir') { echo "class='nav-link active'"; }else{ echo "class='nav-link'"; } ?>>
+              <i class="nav-icon fas fa-print"></i>
+              <p>
+                Unduh Formulir
               </p>
             </a>
           </li>

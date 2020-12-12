@@ -1,7 +1,7 @@
 
 <footer class="main-footer">
   <div class="float-right d-none d-sm-block">
-    <b>Version</b> 1.0.1
+    <b>Version</b> 2.0.0
   </div>
   <strong>Copyright &copy; <?= date('Y') ?> <a href="http://mrj20net.blogspot.com"><?= 'J'.'u'.'l'.'i'.'a'.'n'.' '.'O'.'f'.'f'.'i'.'c'.'i'.'a'.'l' ?></a>.
 </footer>

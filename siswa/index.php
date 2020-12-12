@@ -3,7 +3,7 @@ ob_start();
 $page = 'Edit Profile';
 include('header.php');
 include('function.php');
-session_start();
+
 if (!isset($_SESSION['siswa'])) {
 	header('location:../login.php?alert');
 }else{
@@ -88,15 +88,6 @@ if (!isset($_SESSION['siswa'])) {
 										<input type="text" class="form-control mb-3" id="kecamatan" name="kecamatan"  placeholder="Jalancagak" value="<?= $dt['kecamatan']; ?>" required>
 									</div>
 									<div class="form-group">
-										<label for="inputnamek">Riwayat Kesehatan<strong class="text-danger"> *</strong></label>
-										<select class="custom-select" name="kesehatan" required>
-											<option selected disabled value="">---</option>
-											<option value="Punya kelainan atau penyakit khusus" <?php if($dt['kesehatan']=='Punya kelainan atau penyakit khusus'){echo 'selected'; }?>>Punya kelainan atau penyakit khusus</option>
-											<option value="Punya riwayat sakit sampai sampai harus operasi atau di rawat" <?php if($dt['kesehatan']=='Punya riwayat sakit sampai sampai harus operasi atau di rawat'){echo 'selected'; }?>>Punya riwayat sakit sampai sampai harus operasi atau di rawat</option>
-											<option value="Sehat baik fisik maupun mental" <?php if($dt['kesehatan']=='Sehat baik fisik maupun mental'){echo 'selected'; }?>>Sehat baik fisik maupun mental</option>
-										</select>
-									</div>
-									<div class="form-group">
 										<label for="inputnamek">Email Aktif<strong class="text-danger"> *</strong></label>
 										<input type="text" class="form-control mb-3" id="email" name="email"  placeholder="markjulian404@gmail.com" value="<?= $dt['email_aktif']; ?>" required>
 									</div>
@@ -105,15 +96,6 @@ if (!isset($_SESSION['siswa'])) {
 									<div class="form-group">
 										<label for="inputnamek">Asal Sekolah<strong class="text-danger"> *</strong></label>
 										<input type="text" class="form-control mb-3" id="asalsekolah" name="asalsekolah"  placeholder="MTs Rumnawati" value="<?= $dt['asal_sekolah']; ?>" required>
-									</div>
-									<div class="form-group">
-										<label for="inputnamek">Wilayah Asal Sekolah<strong class="text-danger"> *</strong></label>
-										<select class="custom-select" name="wilayah" required>
-											<option selected disabled value="">---</option>
-											<option value="Dalam Kabupaten" <?php if($dt['wilayah_asalsekolah']=='Dalam Kabupaten'){echo 'selected'; }?>>Dalam Kabupaten</option>
-											<option value="Luar Kabupaten" <?php if($dt['wilayah_asalsekolah']=='Luar Kabupaten'){echo 'selected'; }?>>Luar Kabupaten</option>
-											<option value="Luar Provinsi" <?php if($dt['wilayah_asalsekolah']=='wilayah_asalsekolah'){echo 'selected'; }?>>Luar Provinsi</option>
-										</select>
 									</div>
 									<div class="form-group">
 										<label for="inputnamek">Jenis Kelamin<strong class="text-danger"> *</strong></label>
@@ -149,7 +131,7 @@ if (!isset($_SESSION['siswa'])) {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="inputnamek">Alamat<strong class="text-danger"> *</strong></label>
-										<textarea rows="4" style="height: 124px;" class="form-control" name="alamat" placeholder="Jl.Raya Sarireja No.4" value="" required><?= $dt['alamat']; ?></textarea>
+										<textarea rows="4" style="height: 124px;" class="form-control" name="alamat" placeholder="Jl.Raya Sarireja No.4" value="" required><?= $dt['kampung']; ?></textarea>
 									</div>
 									<div class="form-group">
 										<label for="inputnamek">Tempat Lahir<strong class="text-danger"> *</strong></label>

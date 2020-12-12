@@ -3,13 +3,34 @@
   include('header.php');
   include('config.php');
 
+function get_client_ip_2() {
+    $ipaddress = '';
+    if (isset($_SERVER['HTTP_CLIENT_IP']))
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    else if(isset($_SERVER['REMOTE_ADDR']))
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    else
+        $ipaddress = 'IP tidak dikenali';
+    return $ipaddress;
+}
+
+
   if (isset($_POST['submit'])) {
     $nama   = $_POST['nama'];
     $email  = $_POST['email'];
     $pesan  = $_POST['pesan'];
+    $ua     = $_SERVER['HTTP_USER_AGENT'];
     $tanggal = date("d F Y");
 
-    $query  = mysqli_query($con,"INSERT INTO pesan (nama,email,isi_pesan,tanggal) VALUES('$nama','$email','$pesan','$tanggal')")or die(mysqli_error($con));
+    $query  = mysqli_query($con,"INSERT INTO pesan (nama,email,isi_pesan,tanggal,user_agent) VALUES('$nama','$email','$pesan','$tanggal','$ua')")or die(mysqli_error($con));
     if ($query) {
       echo "<script>
       Swal.fire({
@@ -60,17 +81,18 @@
             <div class="card-body">
               <form action="" method="post">
                 <div class="form-group">
-                  <label class="control-label">Nama</label>
+                  <label class="control-label">Nama <small class="text-danger">*</small></label>
                   <input type="text" name="nama" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Email</label>
-                  <input type="text" name="email" class="form-control">
+                  <label class="control-label">Email <small class="text-danger">*</small></label>
+                  <input type="email" name="email" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Pesan</label>
+                  <label class="control-label">Pesan <small class="text-danger">*</small></label>
                   <textarea class="form-control" rows="3" name="pesan"></textarea>
                 </div>
+                <small class="text-info"><b>*</b> IP anda kami catat untuk menghindari hal-hal yang tidak di inginkan.</small>
                 <div class="pull-right">
                  <button type="submit" class="btn btn-info" name="submit">
                   <i class="fas fa-envelope"></i>

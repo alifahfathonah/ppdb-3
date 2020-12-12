@@ -1,7 +1,6 @@
 <?php 
 ob_start();
-session_start();
-$page = 'Ubah Password';
+$page = 'pw';
 include('header.php');
 include('function.php');
 $nisn 	= $_SESSION['username'];

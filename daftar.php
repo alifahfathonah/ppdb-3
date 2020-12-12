@@ -7,14 +7,26 @@ $result 	= mysqli_query($con,"SELECT * FROM daftar");
 $data 		= mysqli_fetch_assoc($result);	
 session_start();
 if (isset($_POST['submit'])) {
+	
 	$_SESSION['pos']= $_POST;
-	$wilayah 		= $_POST['wilayah'];
+	if ($_POST['nama-wali'] == '') {
+		$nama_wali 		= 'Tidak Ada';
+		$nik_wali 		= 'Tidak Ada';
+		$p_wali 		= 'Tidak Ada';
+	}else{
+		$nama_wali 		= $_SESSION['pos']['nama-wali'];
+		$nik_wali 		= $_SESSION['pos']['nik-wali'];
+		$p_wali 		= $_POST['p-wali'];
+	}
 	$jeniskelamin 	= $_POST['jeniskelamin'];
 	$gdarah 		= $_POST['gdarah'];
 	$agama 			= $_POST['agama'];
 	$tinggal 		= $_POST['tinggal'];
-	$kesehatan 		= $_POST['kesehatan'];
 	$bkegiatan 		= $_POST['bkegiatan'];
+	$kejuruan 		= $_POST['kejuruan'];
+	$pondok 		= $_POST['pondok'];
+	$p_ayah 		= $_POST['p-ayah'];
+	$p_ibu 			= $_POST['p-ibu'];
 	$nisns 			= $_SESSION['pos']['nisn'];
 	$namas 			= $_SESSION['pos']['nama'];
 	$tanggals 		= $_SESSION['pos']['tanggal'];
@@ -27,20 +39,39 @@ if (isset($_POST['submit'])) {
 	$nratas 		= $_SESSION['pos']['nrata'];
 	$tlahirs 		= $_SESSION['pos']['tlahir'];
 	$desas 			= $_SESSION['pos']['desa'];
-	$alamats 		= $_SESSION['pos']['alamat'];
+	$jk 			= $_SESSION['pos']['jk'];
 	$provs 			= $_SESSION['pos']['prov'];
+	$nama_ayah 		= $_SESSION['pos']['nama-ayah'];
+	$nik_ayah 		= $_SESSION['pos']['nik-ayah'];
+	$nama_ibu 		= $_SESSION['pos']['nama-ibu'];
+	$nik_ibu 		= $_SESSION['pos']['nik-ibu'];
+	$penghasilan 	= $_SESSION['pos']['penghasilan'];
+	$alamat_ortu	= $_SESSION['pos']['alamat'];
+
+
 	if ($nisns == $data['nisn']) {
 		echo "<script>
 		alert('Nisn Sudah Terdaftar');
 		</script>";
 	}else{
 		if ($nisns != $data['nisn']) {
-			insert("INSERT INTO daftar (nisn,nama,asal_sekolah,wilayah_asalsekolah,alamat,tanggal_lahir,jenis_kelamin,tempat_lahir,agama,golongan_darah,tinggal,rt,rw,desa,kecamatan,kabupaten,provinsi,kesehatan,raport,kegiatan,email_aktif)"."VALUES('$nisns','$namas','$asalsekolahs','$wilayah','$alamats','$tanggals','$jeniskelamin','$tlahirs','$agama','$gdarah','$tinggal','$rts','$rws','$desas','$kecamatans','$kabs','$provs','$kesehatan','$nratas','$bkegiatan','$emails')")or die(mysqli_error($con));
+			insert("INSERT INTO daftar (nisn,nama,asal_sekolah,kampung,tanggal_lahir,jenis_kelamin,tempat_lahir,agama,golongan_darah,tinggal,rt,rw,desa,kecamatan,kabupaten,provinsi,raport,kegiatan,email_aktif,kejuruan,pondok,nama_ayah,nik_ayah,nama_ibu,nik_ibu,nama_wali,nik_wali,pend_ayah,pend_ibu,pend_wali,penghasilan,alamat_ortu)"."VALUES('$nisns','$namas','$asalsekolahs','$jk','$tanggals','$jeniskelamin','$tlahirs','$agama','$gdarah','$tinggal','$rts','$rws','$desas','$kecamatans','$kabs','$provs','$nratas','$bkegiatan','$emails','$kejuruan','$pondok','$nama_ayah','$nik_ayah','$nama_ibu','$nik_ibu','$nama_wali','$nik_wali','$p_ayah','$p_ibu','$p_wali','$penghasilan','$alamat_ortu')")or die(mysqli_error($con));
 
 			insert("INSERT INTO user (username,password,role)"."VALUES('$nisns','$nisns','2')")or die(mysqli_error($con));
 			echo "<script>
-			alert('Berhasil Mendaftar');
-			</script>";
+        Swal.fire({
+            title: 'Sukses',
+            text: 'Berhasil mendaftar, Silakan login!',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.value) {
+                window.location.replace('login.php');
+            }
+        })
+        </script>";
 			include_once('_prosesdaftar.php');
 		}
 	}
@@ -75,7 +106,7 @@ if (isset($_POST['submit'])) {
 			<div class="col-md-10">
 				<div class="card">
 					<div class="card-header">
-						<h3 class="card-title">Daftar Kuy</h3>
+						<h3 class="card-title">Data Siswa</h3>
 					</div>
 					<!-- /.card-header -->
 					<div class="card-body">
@@ -102,13 +133,13 @@ if (isset($_POST['submit'])) {
 									<div class="form-group">
 										<label for="inputnamek">Agama<strong class="text-danger"> *</strong></label>
 										<select class="custom-select" name="agama" required>
-											<option selected disabled value="">---</option>
-											<option value="Islam">Islam</option>
-											<option value="Kristen Khatolik">Kristen Khatolik</option>
-											<option value="Kristen Protestan">Kristen Protestan</option>
-											<option value="Hindu">Hindu</option>
-											<option value="Budha">Budha</option>
-											<option value="Konghucu">Konghucu</option>
+											<option selected disabled value="" class="bg-primary">---</option>
+											<option value="Islam" class="bg-primary">Islam</option>
+											<option value="Kristen Khatolik" class="bg-primary">Kristen Khatolik</option>
+											<option value="Kristen Protestan" class="bg-primary">Kristen Protestan</option>
+											<option value="Hindu" class="bg-primary">Hindu</option>
+											<option value="Budha" class="bg-primary">Budha</option>
+											<option value="Konghucu" class="bg-primary">Konghucu</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -120,15 +151,6 @@ if (isset($_POST['submit'])) {
 										<input type="text" class="form-control mb-3" id="kecamatan" name="kecamatan"  placeholder="Jalancagak" value="<?= $kecamatans; ?>" required>
 									</div>
 									<div class="form-group">
-										<label for="inputnamek">Riwayat Kesehatan<strong class="text-danger"> *</strong></label>
-										<select class="custom-select" name="kesehatan" required>
-											<option selected disabled value="">---</option>
-											<option value="Punya kelainan atau penyakit khusus">Punya kelainan atau penyakit khusus</option>
-											<option value="Punya riwayat sakit sampai sampai harus operasi atau di rawat">Punya riwayat sakit sampai sampai harus operasi atau di rawat</option>
-											<option value="Sehat baik fisik maupun mental">Sehat baik fisik maupun mental</option>
-										</select>
-									</div>
-									<div class="form-group">
 										<label for="inputnamek">Email Aktif<strong class="text-danger"> *</strong></label>
 										<input type="text" class="form-control mb-3" id="email" name="email"  placeholder="markjulian404@gmail.com" value="<?= $emails; ?>" required>
 									</div>
@@ -137,15 +159,6 @@ if (isset($_POST['submit'])) {
 									<div class="form-group">
 										<label for="inputnamek">Asal Sekolah<strong class="text-danger"> *</strong></label>
 										<input type="text" class="form-control mb-3" id="asalsekolah" name="asalsekolah"  placeholder="MTs Rumnawati" value="<?= $asalsekolahs; ?>" required>
-									</div>
-									<div class="form-group">
-										<label for="inputnamek">Wilayah Asal Sekolah<strong class="text-danger"> *</strong></label>
-										<select class="custom-select" name="wilayah" required>
-											<option selected disabled value="">---</option>
-											<option value="Dalam Kabupaten">Dalam Kabupaten</option>
-											<option value="Luar Kabupaten">Luar Kabupaten</option>
-											<option value="Luar Provinsi">Luar Provinsi</option>
-										</select>
 									</div>
 									<div class="form-group">
 										<label for="inputnamek">Jenis Kelamin<strong class="text-danger"> *</strong></label>
@@ -177,15 +190,23 @@ if (isset($_POST['submit'])) {
 										<label for="inputnamek">Nilai Rata-Rata Raport<strong class="text-danger"> *</strong></label>
 										<input type="number" class="form-control mb-3" id="nrata" name="nrata"  placeholder="7.5" required>
 									</div>
+									<div class="form-group">
+										<label for="inputnamek">Kejuruan<strong class="text-danger"> *</strong></label>
+										<select class="custom-select" name="kejuruan" required>
+											<option selected disabled value="">---</option>
+											<option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+											<option value="Teknik Kendaraan Ringan">Teknik Kendaraan Ringan</option>
+										</select>
+									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="inputnamek">Alamat<strong class="text-danger"> *</strong></label>
-										<textarea rows="4" style="height: 124px;" class="form-control" name="alamat" placeholder="Jl.Raya Sarireja No.4" value="<?= $alamats; ?>" required></textarea>
+										<label for="inputnamek">Jalan/Kampung<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="jk" name="jk"  placeholder="Mekarsari" value="<?= $jk; ?>" required>
 									</div>
 									<div class="form-group">
 										<label for="inputnamek">Tempat Lahir<strong class="text-danger"> *</strong></label>
-										<input type="text" class="form-control mb-3" id="tlahir" name="tlahir"  placeholder="Banjarsari" value="<?= $tlahirs; ?>" required>
+										<input type="text" class="form-control mb-3" id="tlahir" name="tlahir"  placeholder="Subang" value="<?= $tlahirs; ?>" required>
 									</div>
 									<div class="form-group">
 										<label for="inputnamek">Tinggal Di/Bersama<strong class="text-danger"> *</strong></label>
@@ -210,7 +231,7 @@ if (isset($_POST['submit'])) {
 										<input type="text" class="form-control mb-3" id="prov" name="prov"  placeholder="Jawa Barat" value="<?= $provs; ?>" required>
 									</div>
 									<div class="form-group">
-										<label for="inputnamek">Bidang Kegiatan<strong class="text-danger"> *</strong></label>
+										<label for="inputnamek">Senang/Hobi Berkegiatan<strong class="text-danger"> *</strong></label>
 										<select class="custom-select" name="bkegiatan" required>
 											<option selected disabled value="">---</option>
 											<option value="Akademis">Akademis</option>
@@ -227,30 +248,127 @@ if (isset($_POST['submit'])) {
 											<option value="Hobi lain yang positif">Hobi lain yang positif</option>
 										</select>
 									</div>
+									<div class="form-group">
+										<label for="inputnamek">Siap Mengikuti Program Pondok?<strong class="text-danger"> *</strong></label>
+										<select class="custom-select" name="pondok" required>
+											<option selected disabled value="">---</option>
+											<option value="Siap">Siap</option>
+											<option value="Tidak Siap">Tidak Siap</option>
+											<option value="Pikir Pikir Dulu">Pikir Pikir Dulu</option>
+										</select>
+									</div>
 								</div>
 							</div>			
 							<!-- /.card-body -->
-							<div class="card-footer">
-								<button type="submit" name="submit" class="btn btn-info">Simpan</button>
-							</div>
-						</form>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Data Orang Tua/Wali</h3>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="inputnamek">Nama Ayah<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="nama-ayah" name="nama-ayah"  placeholder="Nama Lengkap" value="<?= $nama_ayah; ?>" required >
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">NIK Ayah<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="nik-ayah" name="nik-ayah"  placeholder="NIK Ayah" value="<?= $nik_ayah; ?>" required>
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">Nama Ibu<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="nama-ibu" name="nama-ibu"  placeholder="Nama Lengkap" value="<?= $nama_ibu; ?>" required >
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">NIK Ibu<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="nik-ibu" name="nik-ibu"  placeholder="NIK Ibu" value="<?= $nik_ibu; ?>" required>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="inputnamek">Nama Wali <i>(Jika Ada)</i></label>
+										<input type="text" class="form-control mb-3" id="nama-wali" name="nama-wali"  placeholder="Nama Lengkap" value="<?= $nama_wali; ?>">
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">NIK Wali <i>(Jika Ada)</i></label>
+										<input type="text" class="form-control mb-3" id="nik-wali" name="nik-wali"  placeholder="NIK Wali" value="<?= $nik_wali; ?>">
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">Pendidikan Ayah<strong class="text-danger"> *</strong></label>
+										<select class="custom-select" name="p-ayah" required>
+											<option selected disabled value="">---</option>
+											<option value="Tidak Ada">Tidak Ada</option>
+											<option value="SD">SD</option>
+											<option value="SLTP">SLTP</option>
+											<option value="SLTA">SLTA</option>
+											<option value="S-1">S-1</option>
+											<option value="S-2">S-2</option>
+											<option value="S-3">S-3</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">Pendidikan Ibu<strong class="text-danger"> *</strong></label>
+										<select class="custom-select" name="p-ibu" required>
+											<option selected disabled value="">---</option>
+											<option value="Tidak Ada">Tidak Ada</option>
+											<option value="SD">SD</option>
+											<option value="SLTP">SLTP</option>
+											<option value="SLTA">SLTA</option>
+											<option value="S-1">S-1</option>
+											<option value="S-2">S-2</option>
+											<option value="S-3">S-3</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="inputnamek">Pendidikan Wali<strong class="text-danger"> *</strong></label>
+										<select class="custom-select" name="p-wali">
+											<option selected disabled value="">---</option>
+											<option value="Tidak Ada">Tidak Ada</option>
+											<option value="SD">SD</option>
+											<option value="SLTP">SLTP</option>
+											<option value="SLTA">SLTA</option>
+											<option value="S-1">S-1</option>
+											<option value="S-2">S-2</option>
+											<option value="S-3">S-3</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">Penghasilan Orang Tua<strong class="text-danger"> *</strong></label>
+										<input type="text" class="form-control mb-3" id="penghasilan" name="penghasilan"  placeholder="Penghasilan Ortu" value="<?= $penghasilan; ?>" required>
+									</div>
+									<div class="form-group">
+										<label for="inputnamek">Alamat Orang Tua<strong class="text-danger"> *</strong></label>
+										<textarea rows="4" style="height: 124px;" class="form-control" name="alamat" placeholder="Jl.Raya Sarireja No.4" value="<?= $alamat_ortu; ?>" required></textarea>
+									</div>
+								</div>			
+								<!-- /.card-body -->
+								<div class="card-footer">
+									<button type="submit" name="submit" class="btn btn-info">Simpan</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- /.card-body -->
-		<!-- /.card -->
-	</section>
-	<!-- /.content -->
-</div>
-<?php include('footer.php'); ?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#date').datepicker({
-			format: "dd-mm-yyyy",
+			<!-- /.card-body -->
+			<!-- /.card -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<?php include('footer.php'); ?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#date').datepicker({
+				format: "dd-mm-yyyy",
+
+			});
 
 		});
-
-	});
-</script>
+	</script>
 

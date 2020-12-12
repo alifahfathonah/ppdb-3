@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Apr 2020 pada 12.29
--- Versi Server: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Waktu pembuatan: 11 Des 2020 pada 14.30
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,8 +31,7 @@ CREATE TABLE `daftar` (
   `nisn` varchar(12) NOT NULL,
   `nama` varchar(128) NOT NULL,
   `asal_sekolah` varchar(128) NOT NULL,
-  `wilayah_asalsekolah` varchar(128) NOT NULL,
-  `alamat` text NOT NULL,
+  `kampung` text NOT NULL,
   `tanggal_lahir` varchar(30) NOT NULL,
   `jenis_kelamin` varchar(15) NOT NULL,
   `tempat_lahir` varchar(128) NOT NULL,
@@ -46,19 +44,42 @@ CREATE TABLE `daftar` (
   `kecamatan` varchar(128) NOT NULL,
   `kabupaten` varchar(128) NOT NULL,
   `provinsi` varchar(128) NOT NULL,
-  `kesehatan` varchar(128) NOT NULL,
   `raport` varchar(10) NOT NULL,
   `kegiatan` varchar(128) NOT NULL,
-  `email_aktif` varchar(128) NOT NULL
+  `email_aktif` varchar(128) NOT NULL,
+  `kejuruan` varchar(128) NOT NULL,
+  `pondok` varchar(128) NOT NULL,
+  `nama_ayah` varchar(128) NOT NULL,
+  `nik_ayah` varchar(128) NOT NULL,
+  `nama_ibu` varchar(128) NOT NULL,
+  `nik_ibu` varchar(128) NOT NULL,
+  `nama_wali` varchar(128) NOT NULL,
+  `nik_wali` varchar(128) NOT NULL,
+  `pend_ayah` varchar(128) NOT NULL,
+  `pend_ibu` varchar(128) NOT NULL,
+  `pend_wali` varchar(128) NOT NULL,
+  `penghasilan` varchar(128) NOT NULL,
+  `alamat_ortu` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `daftar`
 --
 
-INSERT INTO `daftar` (`nisn`, `nama`, `asal_sekolah`, `wilayah_asalsekolah`, `alamat`, `tanggal_lahir`, `jenis_kelamin`, `tempat_lahir`, `agama`, `golongan_darah`, `tinggal`, `rt`, `rw`, `desa`, `kecamatan`, `kabupaten`, `provinsi`, `kesehatan`, `raport`, `kegiatan`, `email_aktif`) VALUES
-('0021345672', 'Tatang Rahayu', 'MTs Rumnawati', 'Dalam Kabupaten', 'Mekarsari', '2002-09-19', 'Laki-Laki', 'Subang', 'Islam', 'A', 'Orang Tua Kandung', '08', '03', 'Sarireja', 'Jalancagak', 'Subang', 'Jawa Barat', 'Sehat baik fisik maupun mental', '7', 'Akademis', 'markjulian404@gmail.com'),
-('1234567890', 'wew', 'wewe', 'Luar Kabupaten', 'sdsd', '2021-04-06', 'Laki-Laki', 'Subangs', 'Islam', 'A', 'Orang Tua Kandung', '23', '23', 'Sarirejas', 'Jalancagaks', 'Subangs', 'Jawa Barats', 'Sehat baik fisik maupun mental', '75', 'Akademis', 'markjulian404@gmail.com');
+INSERT INTO `daftar` (`nisn`, `nama`, `asal_sekolah`, `kampung`, `tanggal_lahir`, `jenis_kelamin`, `tempat_lahir`, `agama`, `golongan_darah`, `tinggal`, `rt`, `rw`, `desa`, `kecamatan`, `kabupaten`, `provinsi`, `raport`, `kegiatan`, `email_aktif`, `kejuruan`, `pondok`, `nama_ayah`, `nik_ayah`, `nama_ibu`, `nik_ibu`, `nama_wali`, `nik_wali`, `pend_ayah`, `pend_ibu`, `pend_wali`, `penghasilan`, `alamat_ortu`) VALUES
+('1234567890', 'Tatang', 'Mts', 'Mekarsari', '2020-12-17', 'Laki-Laki', 'Subang', 'Islam', '-', 'Orang Tua Kandung', '89', '008', 'Sarireja', 'Jalancagak', 'Jakarta', 'jabar', '80', 'Akademis', 'markjulian404@gmail.com', 'Rekayasa Perangkat Lunak', 'Siap', 'Carlan', '1234567891', 'Marpuah', '1234567891', 'Tidak Ada', 'Tidak Ada', 'SLTA', 'SLTA', 'Tidak Ada', '2000000', 'Sama jng siswa'),
+('1234567891', 'Mark Julian', 'Mts', 'Mekarsari', '2020-12-17', 'Laki-Laki', 'Subang', 'Islam', 'A', 'Orang Tua Kandung', '95', '09', 'Sarireja', 'Jalancagak', 'Jakarta', 'jabar', '80', 'Akademis', 'markjulian404@gmail.com', 'Rekayasa Perangkat Lunak', 'Siap', 'Carlan', '1234567891', 'Marpuah', '1234567891', 'Tidak Ada', 'Tidak Ada', 'SD', 'SD', 'Tidak Ada', '2000000', 'Jalancagak');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `info`
+--
+
+CREATE TABLE `info` (
+  `id` int(11) NOT NULL,
+  `info` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -71,15 +92,18 @@ CREATE TABLE `pesan` (
   `nama` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `isi_pesan` text NOT NULL,
-  `tanggal` varchar(128) NOT NULL
+  `tanggal` varchar(128) NOT NULL,
+  `user_agent` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pesan`
 --
 
-INSERT INTO `pesan` (`id`, `nama`, `email`, `isi_pesan`, `tanggal`) VALUES
-(15, 'Tiara', 'tiaraandita432@gmail.com', 'Adminnya Ganteng ', '25 April 2020');
+INSERT INTO `pesan` (`id`, `nama`, `email`, `isi_pesan`, `tanggal`, `user_agent`) VALUES
+(15, 'Tiara', 'tiaraandita432@gmail.com', 'Adminnya Ganteng ', '25 April 2020', ''),
+(16, 'Tatang', 'markjulian404', 'sdasad', '11 December 2020', ''),
+(17, 'Mark Julian', 'markjulian404@gmail.com', 'asdasdasdas', '11 December 2020', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36');
 
 -- --------------------------------------------------------
 
@@ -100,44 +124,59 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
 (6, 'admin', 'admin', '1'),
-(7, '1234567890', '123456', '2');
+(9, '1234567891', '1234567891', '2'),
+(10, '1234567890', '1234567890', '2');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `daftar`
+-- Indeks untuk tabel `daftar`
 --
 ALTER TABLE `daftar`
   ADD PRIMARY KEY (`nisn`);
 
 --
--- Indexes for table `pesan`
+-- Indeks untuk tabel `info`
+--
+ALTER TABLE `info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `pesan`
 --
 ALTER TABLE `pesan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `pesan`
+-- AUTO_INCREMENT untuk tabel `info`
+--
+ALTER TABLE `info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pesan`
 --
 ALTER TABLE `pesan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

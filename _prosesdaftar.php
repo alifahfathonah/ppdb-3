@@ -11,7 +11,13 @@ $kabs 			= '';
 $nratas 		= '';
 $tlahirs 		= '';
 $desas 			= '';
-$alamats 		= '';
 $provs 			= '';
-
+$jk				= '';
+$nama_ayah 		= '';
+$nik_ayah 		= '';
+$nama_ibu 		= '';
+$nik_ibu 		= '';
+$nama_wali 		= '';
+$nik_wali 		= '';
+$penghasilan 	= '';
 ?>
